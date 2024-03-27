@@ -8,18 +8,23 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
-    fetch("https://be-myflix-9ae503e43319.herokuapp.com/")
+    fetch("https://be-myflix-9ae503e43319.herokuapp.com/movies")
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.docs.map((doc) => {
+        console.log(data);
+        const moviesFromApi = data.map((doc) => {
           return {
-            id: doc.key,
-            title: doc.title,
-            image: doc.imageUrl,
-            description: doc.description,
-            genre: doc.genre,
-            director: doc.director,
-            featured: doc.featured
+            id: doc._id,
+            Title: doc.Title,
+            ImagePath: doc.ImagePath,
+            Description: doc.Description,
+            Genre: {
+              Name: doc.Genre.Name
+            },
+            Director: {
+              Name: doc.Director.Name
+            },
+            Featured: doc.Featured
           }
         });
 
@@ -29,7 +34,10 @@ export const MainView = () => {
 
   if (selectedMovie) {
     return (
-      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+      <MovieView 
+      movie={selectedMovie} 
+      onBackClick={() => setSelectedMovie(null)} 
+      />
     );
   }
 
