@@ -28450,7 +28450,7 @@ const LoginView = ({ onLoggedIn })=>{
                 onLoggedIn(data.user, data.token);
             } else alert("No such user");
         }).catch((e)=>{
-            alert("Something went wrong");
+            alert("Something didn't work");
         });
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
@@ -28519,7 +28519,7 @@ $RefreshReg$(_c, "LoginView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"7uBNl","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"a8lS1","react":"21dqq"}],"4OGiN":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"7uBNl","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"a8lS1"}],"4OGiN":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$73d1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
