@@ -4,15 +4,14 @@ import { Button, Card } from "react-bootstrap";
 
 export const MovieCard = ({ movie, onMovieClick }) => {
   return (
-    <Card>
+    <Card className="h-100">
       <Card.Img 
         variant="top" 
         src={movie.ImagePath} onClick={() => onMovieClick(movie)} 
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", width: "200px", height: "300px" }}
       />
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
-        <Card.Text>Directed by: {movie.Director.Name}</Card.Text>
         <Button onClick={() => onMovieClick(movie)} variant="link">
           Open
         </Button>

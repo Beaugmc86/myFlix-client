@@ -47,9 +47,9 @@ export const MainView = () => {
     }, [token]);
     
     return (
-      <Row>
+      <Row className="justify-content-md-center">
         {!user ? (
-          <>
+          <Col md={5}>
             <LoginView 
               onLoggedIn={(user, token) => {
                 setUser(user);
@@ -57,12 +57,15 @@ export const MainView = () => {
               }} />
             or
             <SignupView />
-          </>
+          </Col>
         ) : selectedMovie ? (
-          <MovieView 
-            movie={selectedMovie} 
-            onBackClick={() => setSelectedMovie(null)} 
-          />
+          <Col md={8}>
+            <MovieView 
+              style={{ border: "1px solid green" }}
+              movie={selectedMovie} 
+              onBackClick={() => setSelectedMovie(null)} 
+            />
+          </Col>
         ) : movies.length === 0 ? (
           <div>The list is empty!</div>
         ) : (
@@ -78,13 +81,14 @@ export const MainView = () => {
             </Button>
 
             {movies.map((movie) => (
-              <MovieCard
-                key={movie.id}
-                movie={movie}
-                onMovieClick={(newSelectedMovie) => {
-                  setSelectedMovie(newSelectedMovie);
-                }}
-              />
+              <Col className="mb-5" key={movie.id} md={3}>
+                <MovieCard
+                  movie={movie}
+                  onMovieClick={(newSelectedMovie) => {
+                    setSelectedMovie(newSelectedMovie);
+                  }}
+                />
+              </Col>
             ))}
           </>
         )}

@@ -9,8 +9,7 @@ import "./index.scss";
 // Main component (will eventually use all the others)
 const MyFlixApplication = () => {
   return (
-    //remove red border when finished with grid system
-     <Container style={{border: "1px solid red"}}>
+     <Container>
       <MainView />
     </Container>
   );
