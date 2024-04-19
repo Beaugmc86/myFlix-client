@@ -3,6 +3,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import "./main-view.scss";
 import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -49,19 +50,18 @@ export const MainView = () => {
     return (
       <Row className="justify-content-md-center">
         {!user ? (
-          <Col md={5}>
+          <Col md={5} className="login-container">
             <LoginView 
               onLoggedIn={(user, token) => {
                 setUser(user);
                 setToken(token);
               }} />
-            or
+            or create an account
             <SignupView />
           </Col>
         ) : selectedMovie ? (
           <Col md={8}>
             <MovieView 
-              style={{ border: "1px solid green" }}
               movie={selectedMovie} 
               onBackClick={() => setSelectedMovie(null)} 
             />
