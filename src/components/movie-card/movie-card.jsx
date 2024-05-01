@@ -1,20 +1,29 @@
-//import PropTypes library
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { BookmarkHeart, BookmarkHeartFill } from "react-bootstrap-icons";
 import "./movie-card.scss";
 
-export const MovieCard = ({ movie }) => {
+export const MovieCard = ({ movie, addFav, removeFav, isFavorite }) => {
   return (
     <Card className="h-100 card-shadow">
-      <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-        <Card.Img 
-          variant="top" 
-          src={movie.ImagePath} 
-          style={{ cursor: "pointer" }}
-        />
-      </Link>
+      <div>
+        <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
+          <Card.Img 
+            variant="top" 
+            src={movie.ImagePath} 
+            style={{ cursor: "pointer" }}
+          />
+        </Link>
+        <div>
+          {isFavorite ? (
+            <BookmarkHeartFill size={40} color="red" className="fav-button mt-2 me-2 top-0 end-0" onClick={() => removeFav(movie.id)}/>
+          ) : (
+            <BookmarkHeart size={40} color="red" className="fav-button mt-2 me-2 top-0 end-0" onClick={() => addFav(movie.id)}/>
+          )}
+        </div>
+      </div>
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Text>{movie.Director.Name}</Card.Text>

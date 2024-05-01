@@ -1,21 +1,21 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Col, Row, Container } from "react-bootstrap";
 import { Button, Card, Form } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
-import { PersonSquare } from "react-bootstrap-icons";
 import moment from 'moment';
 
 export const ProfileView = ({ user, movies, setUser, removeFav, addFav}) => {
-    const [username, setUsername] = useState(user.Username);
-    const [email, setEmail] = useState(user.Email);
-    const [birthDate, setBirthdate] = useState(user.birthDate);
+    const [username, setUsername] = useState(user.username);
+    const [password, setPassword] = useState(user.password);
+    const [email, setEmail] = useState(user.email);
+    const [birthdate, setBirthdate] = useState(user.birthdate);
 
     // Navigate
     const navigate = useNavigate();
 
     // Return list of favorite Movies
-    const favoriteMovieList = movies.filter(m => user.FavoriteMovies.includes(m._id));
+    const favoriteMovieList = movies.filter(m => user.FavoriteMovies.includes(m.id));
 
     // Token
     const token = localStorage.getItem('token');
@@ -29,8 +29,9 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav}) => {
 
         const data ={
             username: username,
+            password: password,
             email: email,
-            birthDate: birthDate
+            birthdate: birthdate
         }
 
         fetch(`https://be-myflix-9ae503e43319.herokuapp.com/users/${user.username}`, {
@@ -83,13 +84,14 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav}) => {
                     <Card>
                         <Card.Body>
                             <Card.Title>My Profile</Card.Title>
-                            <PersonSquare variant="top" color="orange" className="my-4" size={180} />
                             <Card.Text>Username: {user.username}</Card.Text>
                             <Card.Text>Email: {user.email}</Card.Text>
-                            <Card.Text>Birthday: {moment(user.birthDate).format('MM/DD/YYYY')}</Card.Text>
+                            <Card.Text>Birthday: {moment(user.birthdate).format('MM/DD/YYYY')}</Card.Text>
                         </Card.Body>
                     </Card>
                 </Col>
+            </Row>
+            <Row>
                 <Col md={7} className="mt-5">
                     <Form onSubmit={handleUpdate}>
                         <Form.Group controlId="formUsername">
@@ -97,8 +99,16 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav}) => {
                             <Form.Control
                             className="mb-3"
                             type="text"
-                            value={username}
                             onChange={(e) => setUsername(e.target.value)}
+                            minLength="5"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formPassword">
+                            <Form.Label>Password: </Form.Label>
+                            <Form.Control
+                            className="mb-3"
+                            type="text"
+                            onChange={(e) => setPassword(e.target.value)}
                             minLength="5"
                             />
                         </Form.Group>
@@ -107,7 +117,6 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav}) => {
                             <Form.Control
                             className="mb-3"
                             type="email"
-                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             />
                         </Form.Group>
@@ -116,7 +125,6 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav}) => {
                             <Form.Control
                             className="mb-2"
                             type="date"
-                            value={birthDate}
                             onChange={(e) => setBirthdate(e.target.value)}
                             />
                         </Form.Group>
@@ -131,12 +139,12 @@ export const ProfileView = ({ user, movies, setUser, removeFav, addFav}) => {
                     {
                     favoriteMovieList?.length !== 0 ?
                     favoriteMovieList?.map((movie) => (
-                        <Col sm={7} md={5} lg={3} xl={2} className="mx-2 mt-2 mb-5 col-6 similar-movies-img" key={movie._id}>
+                        <Col sm={7} md={5} lg={3} xl={2} className="mx-2 mt-2 mb-5 col-6 similar-movies-img" key={movie.id}>
                             <MovieCard
                                 movie={movie}
                                 removeFav={removeFav}
                                 addFav={addFav}
-                                isFavorite={user.FavoriteMovies.includes(movie._id)}
+                                isFavorite={user.FavoriteMovies.includes(movie.id)}
                             />
                         </Col>
                     ))

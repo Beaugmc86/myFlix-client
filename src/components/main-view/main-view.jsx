@@ -6,7 +6,6 @@ import { SignupView } from "../signup-view/signup-view";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view.jsx";
-import "./main-view.scss";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -21,6 +20,7 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [search, setSearch] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
+
 
   // Connect App to API with Hook
   useEffect(() => {
@@ -72,7 +72,6 @@ export const MainView = () => {
           if (user) {
               localStorage.setItem('user', JSON.stringify(user));
               setUser(user);
-              //setIsFavorite(true);
           }
       }).catch(error => {
           console.error('Error: ', error);
@@ -97,7 +96,6 @@ export const MainView = () => {
           if (user) {
               localStorage.setItem('user', JSON.stringify(user));
               setUser(user);
-              //setIsFavorite(false);
           }
       }).catch(error => {
           console.error('Error: ', error);
@@ -113,6 +111,7 @@ export const MainView = () => {
           setToken(null);
           localStorage.clear();
         }}
+        onSearch={setSearch}
         />
 
         <Row className="justify-content-md-center">
@@ -189,9 +188,24 @@ export const MainView = () => {
                     <Col>The list has no movies!</Col>
                   ) : (
                     <>
-                      {movies.map((movie) => (
+                      {movies.filter((movie) => {
+                        return selectedGenre === ""
+                        ? movie
+                        : movie.Genre.Name === selectedGenre;
+                      })
+                      .filter((movie) => {
+                        return search=== ""
+                        ? movie
+                        : movie.Title.toLowerCase().includes(search.toLowerCase());
+                      })
+                      .map((movie, movieId) => (
                         <Col className="mb-4" key={movie.id} md={3}>
-                          <MovieCard movie={movie} />
+                          <MovieCard 
+                            movie={movie}
+                            removeFav={removeFav}
+                            addFav={addFav}
+                            isFavorite={user.FavoriteMovies.includes(movie.id)}
+                          />
                         </Col>
                       ))}
                     </>
@@ -210,11 +224,11 @@ export const MainView = () => {
                 ) : (
                   <Col>
                     <ProfileView
-                    user={user}
-                    movies={movies}
-                    removeFav={removeFav}
-                    addFav={addFav}
-                    setUser={setUser}
+                      user={user}
+                      movies={movies}
+                      removeFav={removeFav}
+                      addFav={addFav}
+                      setUser={setUser}
                     />
                   </Col>
                 )}

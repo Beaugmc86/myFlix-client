@@ -1,9 +1,18 @@
-import { Navbar, Container, Nav, Row, Col, Form  } from "react-bootstrap";
+import React, {useState} from "react";
+import { Navbar, Container, Nav, Form, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+export const NavigationBar = ({ user, onLoggedOut, onSearch }) => {
+  const [query, setQuery] = useState("");
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+    onSearch(value);
+  }
+
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="primary" expand="lg" fixed="top" variant="dark">
       <Container>
         <Navbar.Brand as={Link} to="/">
           myFlix
@@ -32,9 +41,20 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 <Nav.Link onClick={onLoggedOut}>
                   Logout
                 </Nav.Link>
+                <Form>
+                  <div className="d-flex align-items-center justify-content-end">
+                    <FormControl className="mr-sm-2"
+                      type="text" 
+                      placeholder="Search"
+                      id="searchForm"
+                      onChange={handleChange}
+                      aria-label="Search"
+                    />
+                  </div>         
+                </Form>
               </>
             )}
-          </Nav>
+          </Nav>            
         </Navbar.Collapse>
       </Container>
     </Navbar>
