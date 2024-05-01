@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { BookmarkHeart, BookmarkHeartFill } from "react-bootstrap-icons";
+import { BookmarkStar, BookmarkStarFill } from "react-bootstrap-icons";
 import "./movie-card.scss";
 
 export const MovieCard = ({ movie, addFav, removeFav, isFavorite }) => {
@@ -18,9 +18,9 @@ export const MovieCard = ({ movie, addFav, removeFav, isFavorite }) => {
         </Link>
         <div>
           {isFavorite ? (
-            <BookmarkHeartFill size={40} color="red" className="fav-button mt-2 me-2 top-0 end-0" onClick={() => removeFav(movie.id)}/>
+            <BookmarkStarFill size={40} color="red" className="fav-button mt-2 me-2 top-0 end-0" onClick={() => removeFav(movie.id)}/>
           ) : (
-            <BookmarkHeart size={40} color="red" className="fav-button mt-2 me-2 top-0 end-0" onClick={() => addFav(movie.id)}/>
+            <BookmarkStar size={40} color="red" className="fav-button mt-2 me-2 top-0 end-0" onClick={() => addFav(movie.id)}/>
           )}
         </div>
       </div>
